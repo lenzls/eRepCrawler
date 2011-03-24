@@ -738,6 +738,8 @@ class Country(eRepublikXMLProcessor):
         return self.__dict__.copy()
 
 class World(eRepublikXMLProcessor):
+    """world class  stores a dict of countries"""
+    
     url = 'http://api.erepublik.com/v2/feeds/countries'
 
     def __init__(self):

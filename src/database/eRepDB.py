@@ -17,7 +17,10 @@ class eRepLokalDBManager():
         self.cursor = self.connection.cursor()
     
     def initializeNew(self):
-        
+        """creates and initializes a new local erep database
+            if the database is already existing -> automatically skiped
+        """
+
         print "try: creating citizens TABLE"
         try:
             self.cursor.execute("""CREATE TABLE citizens( 
@@ -87,6 +90,8 @@ class eRepLokalDBManager():
             print "Error: ", e
 
     def addCitizen(self, id):
+        """adds a row to the citizens table of the database"""
+
         cit = eRepTools.Citizen(id)
         cit.load()
         values = cit.__getstate__()
@@ -140,6 +145,8 @@ class eRepLokalDBManager():
             print "\tadded kyrillic name"
     
     def addGeneralDataOfCountry(self, id):
+        """adds a row to the countries table of the database"""
+
         country = eRepTools.Country(id)
         country.load()
         values = country.__getstate__()
@@ -169,5 +176,7 @@ class eRepLokalDBManager():
             print "\tadded kyrillic name"
     
     def selectorQuery(self, query):
+        """expects a sql selector query and returns the result of it"""
+
         self.cursor.execute(query)
         return self.cursor.fetchall()
