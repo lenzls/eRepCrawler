@@ -717,7 +717,7 @@ class Country(eRepublikXMLProcessor):
         self.id = int(country.find('id').text)
         self.name = str(country.find('name').text)
         self.citizenFee = int(country.find('citizen-fee').text)
-        self.currency = str(country.find('id').text)
+        self.currency = str(country.find('currency').text)
         self.continent = str(country.find('continent').text)
         self.code = str(country.find('code').text)
         self.avCitLvl = int(country.find('average-citizen-level').text)
