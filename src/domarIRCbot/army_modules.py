@@ -198,7 +198,7 @@ class RemoveGeneral(IRCModule):
         armies = bot.db['armies']
         army = armies[name]
         if not hasattr(army, 'acl'):
-            bot.reply('%s has no generals at the moment.' %s)
+            bot.reply('%s has no generals at the moment.' %name)   #fixed by SimonLenz 2011-03-23: bot.reply('%s has no generals at the moment.' %s)
             bot.armies_lock.release()
             return
         if not army.acl.check(input, ArmyACL.GENERAL):

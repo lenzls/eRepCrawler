@@ -687,4 +687,74 @@ class Region(eRepublikXMLProcessor):
             cits = reg_cit.find('citizens')
             for id_el in cits.findall('citizen/id'):
                 self.citizen_ids.append(int(id_el.text))
-            pageId = pageId + 1
+            pageId = pageId + 1            
+
+class Country(eRepublikXMLProcessor):
+    " eRepublik country class "
+    url = 'http://api.erepublik.com/v2/feeds/countries/%s'
+
+    def __init__(self, arg=None):
+        super(Country, self).__init__()
+
+        self.id = arg
+        self.loaded = False
+
+    def load(self):
+        if self.id == None:
+            raise Exception('id=None and Country.load was called')
+        if self.loaded:
+            return
+        
+        if type(self.id) != int:
+            raise Exception('Invalid id, id should be int')
+
+        xml = ''.join(urlopen(Country.url % str(self.id)))
+
+        self.regionDict = {}
+
+        country = XML(xml)
+
+        self.id = int(country.find('id').text)
+        self.name = str(country.find('name').text)
+        self.citizenFee = int(country.find('citizen-fee').text)
+        self.currency = str(country.find('id').text)
+        self.continent = str(country.find('continent').text)
+        self.code = str(country.find('code').text)
+        self.avCitLvl = int(country.find('average-citizen-level').text)
+        self.citCount = int(country.find('citizen-count').text)
+        self.regCount = int(country.find('region-count').text)
+        regions = country.find('regions')
+        for region in regions.findall('region'):
+            self.regionDict[int(region.find('id').text)] = region.find('name').text
+        
+        self.updateTime = datetime.now(eRepTZ)
+
+        if type(self.id) == int:
+            self.loaded = True
+
+        return self.loaded
+
+    def __getstate__(self):
+        return self.__dict__.copy()
+
+class World(eRepublikXMLProcessor):
+    url = 'http://api.erepublik.com/v2/feeds/countries'
+
+    def __init__(self):
+        super(World, self).__init__()
+
+        self.loaded = False
+
+    def load(self):
+
+        if self.loaded:
+            return
+
+        xml = ''.join(urlopen(World.url))
+
+        countries = XML(xml)
+        
+        self.countryDict = {}
+
+        for country in countries.findall('country'):
+            self.countryDict[int(country.find('id').text)] = country.find('name').text
