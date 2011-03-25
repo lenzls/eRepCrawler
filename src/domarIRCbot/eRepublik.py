@@ -77,6 +77,18 @@ class eRepublikXMLProcessor(object):
         except:
             return False
 
+    def openXML(self, path):
+        """if the api is not available, try it again till it works"""
+        
+        while True:
+            try:
+                xml = ''.join(urlopen(path))
+                break
+            except:
+                print "API not available, trying again.."
+        return xml
+            
+
 # Useful time variables
 ZERO = timedelta(0)
 HOUR = timedelta(hours=1)
@@ -194,7 +206,7 @@ class Citizen(eRepublikXMLProcessor):
             arg = Citizen.url_name % self.id
         else:
             return False
-        xml = ''.join(urlopen(arg))
+        xml = self.openXML(arg)
         cit = XML(xml)
 
         if self.checkError(cit):
@@ -675,7 +687,7 @@ class Region(eRepublikXMLProcessor):
         if type(self.id) != int:
             raise Exception('Invalid id, id should be int')
 
-        xml = ''.join(urlopen(Region.url % str(self.id)))
+        xml = self.openXML(Region.url % str(self.id))
         reg = XML(xml)
 
         # Process data
@@ -686,7 +698,7 @@ class Region(eRepublikXMLProcessor):
         pageId = 0
         pageCount = 1
         while pageId < pageCount:
-            xml = ''.join(urlopen(Region.url_citizens % (str(self.id), str(pageId))))
+            xml = self.openXML(Region.url_citizens % (str(self.id), str(pageId)))
             reg_cit = XML(xml)
 
             pageCount = self.findInt(reg_cit, 'page-count')
@@ -714,7 +726,7 @@ class Country(eRepublikXMLProcessor):
         if type(self.id) != int:
             raise Exception('Invalid id, id should be int')
 
-        xml = ''.join(urlopen(Country.url % str(self.id)))
+        xml = self.openXML(Country.url % str(self.id))
 
         self.regionDict = {}
 
@@ -758,7 +770,7 @@ class World(eRepublikXMLProcessor):
         if self.loaded:
             return
 
-        xml = ''.join(urlopen(World.url))
+        xml = self.openXML(World.url)
 
         countries = XML(xml)
         
