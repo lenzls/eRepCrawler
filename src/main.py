@@ -24,7 +24,8 @@ if __name__ == '__main__':
     
     
 
-    query = """SELECT * FROM citizens WHERE citNAME == "CaptnLenz" """
+    #query = """SELECT citLevel, COUNT(citLevel) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citLevel"""
+    #query = """SELECT citMilitaryRank, COUNT(citMilitaryRank) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citMilitaryRank"""
 
     dbInterface = ERepDBInterface()
     #dbInterface.executeQuery(query)
