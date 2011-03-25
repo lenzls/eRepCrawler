@@ -48,27 +48,33 @@ class eRepublikXMLProcessor(object):
 
     def findString(self, elem, path):
         " Returns string or None from ElementTree Element "
-        return elem.findtext(path) or None
+        return elem.findtext(path) or "undefined"
 
     def findInt(self, elem, path):
         " Returns int or None from ElementTree Element "
         try:
-            return int(self.findString(elem, path)) or None
+            return int(float(elem.findtext(path))) or -1
         except TypeError:
-            return None
+            return -1
+        except:
+            return -1
 
     def findFloat(self, elem, path):
         " Returns float or None from ElementTree Element "
         try:
-            return float(self.findString(elem, path)) or None
+            return float(elem.findtext(path)) or -1.0
         except TypeError:
-            return None
+            return -1.0
+        except:
+            return -1.0
 
     def findBool(self, elem, path):
         " Returns bool or None from ElementTree Element "
         try:
-            return (self.findString(elem, path) == 'true') or False
+            return (elem.findtext(path) == 'true') or False
         except TypeError:
+            return False
+        except:
             return False
 
 # Useful time variables
@@ -222,7 +228,7 @@ class Citizen(eRepublikXMLProcessor):
             self.citizenshipCode = self.findString(cit, 'citizenship/country/code')
             self.citizenshipId = self.findInt(cit, 'citizenship/country/id')
 
-            self.wellness = self.findFloat(cit, 'wellness')
+            self.wellness = self.findInt(cit, 'wellness')
 
             self.isCongressman = self.findBool(cit, 'is-congressman')
 
@@ -240,7 +246,7 @@ class Citizen(eRepublikXMLProcessor):
                 for m in medalRoot:
                     self.medals[self.findString(m, 'type')] = self.findInt(m, 'amount')
 
-            self.employer = self.findString(cit, 'employer/name')
+            self.employer = self.findString(cit,'employer/name')
             self.employerId = self.findInt(cit, 'employer/id')
 
             self.fightCount = self.findInt(cit, 'military/fight-count')
@@ -252,7 +258,7 @@ class Citizen(eRepublikXMLProcessor):
             # Process military skills
             self.militaryLevel = self.findString(cit, 'military-skills/military-skill/level')
             self.militaryName = self.findString(cit, 'military-skills/military-skill/name')
-            self.militaryPoints = self.findFloat(cit, 'military-skills/military-skill/points')
+            self.militaryPoints = self.findInt(cit, 'military-skills/military-skill/points')
 
             self.party = self.findString(cit, 'party/name')
             self.partyId = self.findInt(cit, 'party/id')
@@ -683,7 +689,7 @@ class Region(eRepublikXMLProcessor):
             xml = ''.join(urlopen(Region.url_citizens % (str(self.id), str(pageId))))
             reg_cit = XML(xml)
 
-            pageCount = int(reg_cit.findall('page-count')[0].text)
+            pageCount = self.findInt(reg_cit, 'page-count')
             cits = reg_cit.find('citizens')
             for id_el in cits.findall('citizen/id'):
                 self.citizen_ids.append(int(id_el.text))
@@ -714,18 +720,18 @@ class Country(eRepublikXMLProcessor):
 
         country = XML(xml)
 
-        self.id = int(country.find('id').text)
-        self.name = str(country.find('name').text)
-        self.citizenFee = int(country.find('citizen-fee').text)
-        self.currency = str(country.find('currency').text)
-        self.continent = str(country.find('continent').text)
-        self.code = str(country.find('code').text)
-        self.avCitLvl = int(country.find('average-citizen-level').text)
-        self.citCount = int(country.find('citizen-count').text)
-        self.regCount = int(country.find('region-count').text)
+        self.id = self.findInt(country, 'id')
+        self.name = self.findString(country, 'name')
+        self.citizenFee = self.findInt(country, 'citizen-fee')
+        self.currency = self.findString(country, 'currency')
+        self.continent = self.findString(country, 'continent')
+        self.code = self.findString(country, 'code')
+        self.avCitLvl = self.findInt(country, 'average-citizen-level')
+        self.citCount = self.findInt(country, 'citizen-count')
+        self.regCount = self.findInt(country, 'region-count')
         regions = country.find('regions')
         for region in regions.findall('region'):
-            self.regionDict[int(region.find('id').text)] = region.find('name').text
+            self.regionDict[self.findInt(region, 'id')] = self.findString(region, 'name')
         
         self.updateTime = datetime.now(eRepTZ)
 

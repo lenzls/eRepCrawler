@@ -42,7 +42,7 @@ class eRepLokalDBManager():
                 citPartyName TEXT,
                 citPartyID INTEGER,
                 citMilitarySkillLevel TEXT,
-                citMilitarySkillPoints REAL,
+                citMilitarySkillPoints INTEGER,
                 citMilitaryRankPoints INTEGER,
                 citMilitaryRank TEXT,
                 citMilitaryStars INTEGER,
