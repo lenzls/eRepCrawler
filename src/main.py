@@ -13,17 +13,22 @@ def standardCrawlTask(crawler):
     crawler.addGeneralDataOfWorld()
     crawler.printStats()
 
+def extendedCrawlTask(crawler):
+    """Germany & Poland"""
+
+    crawler.addCitizensOfBundesgebiet()
+    crawler.addCitizensOfCountry(35)
+    crawler.addGeneralDataOfWorld()
+    crawler.printStats()
+
 if __name__ == '__main__':
     starttime = time.time()
     crawler = ERepCrawler()
     dbInterface = ERepDBInterface()
 
     #standardCrawlTask(crawler)
-    #crawler.addCitizensOfBundesgebiet()
-    #crawler.addCitizen(3051253)
-    #crawler.addGeneralDataOfWorld()
-    #crawler.printStats()
-    
+    #extendedCrawlTask(crawler)
+
     #--------------------------------
 
     #query = """SELECT citLevel, COUNT(citLevel) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citLevel"""
