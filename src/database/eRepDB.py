@@ -10,9 +10,10 @@ import domarIRCbot.eRepublik as eRepTools
 
 
 class eRepLokalDBManager():
-    
+    basepath = os.path.join(os.path.dirname(__file__), "..", "..")
+
     def __init__(self):
-        self.connection = sqlite3.connect(os.path.join("..","eRepLokal.db"))
+        self.connection = sqlite3.connect(os.path.join(eRepLokalDBManager.basepath,"eRepLokal.db"))
         self.connection.text_factory = str
         self.cursor = self.connection.cursor()
     
