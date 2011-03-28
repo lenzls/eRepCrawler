@@ -36,8 +36,9 @@ class ERepCrawler(object):
         i = 0
         for citID in region.citizen_ids:
             i += 1
-            print "\tperson nr %i / %i in region %i" %(i, len(region.citizen_ids), regionID)
+            #print "\tperson nr %i / %i in region %i" %(i, len(region.citizen_ids), regionID)    #commented because of too much output
             self.addCitizen(citID)
+        print "\tprocessed %i persons in region %i" %(len(region.citizen_ids), regionID)
         self.addedRegionsCitsC += 1
         
     def addCitizensOfCountry(self, countryID):
