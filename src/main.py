@@ -6,12 +6,11 @@ Created on 23.03.2011
 
 from eRepCrawler import ERepCrawler
 from eRepDBInterface import ERepDBInterface
-import time
+import time, sys
 
 def standardCrawlTask(crawler):
     crawler.addCitizensOfBundesgebiet()
     crawler.addGeneralDataOfWorld()
-    crawler.printStats()
 
 def extendedCrawlTask(crawler):
     """Germany & Poland"""
@@ -19,24 +18,37 @@ def extendedCrawlTask(crawler):
     crawler.addCitizensOfBundesgebiet()
     crawler.addCitizensOfCountry(35)
     crawler.addGeneralDataOfWorld()
-    crawler.printStats()
+
+def germanyAslovenia(crawler):
+    """Germany & Slovenia"""
+    
+    crawler.addCitizensOfBundesgebiet()
+    crawler.addCitizensOfCountry(61)
+    crawler.addGeneralDataOfWorld()
+    
 
 if __name__ == '__main__':
     starttime = time.time()
-    crawler = ERepCrawler()
-    dbInterface = ERepDBInterface()
+    try:
+        crawler = ERepCrawler()
+        dbInterface = ERepDBInterface()
 
-    #standardCrawlTask(crawler)
-    #extendedCrawlTask(crawler)
+        if len(sys.argv) > 1 and sys.argv[1] == "standard":
+            standardCrawlTask(crawler)
+        else:
+            #extendedCrawlTask(crawler)
 
-    #--------------------------------
+            crawler.printStats()
+            #--------------------------------
 
-    #query = """SELECT citLevel, COUNT(citLevel) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citLevel"""
-    #query = """SELECT citMilitaryRank, COUNT(citMilitaryRank) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citMilitaryRank"""
+            #query = """SELECT citLevel, COUNT(citLevel) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citLevel"""
+            #query = """SELECT citCitshipCounName, COUNT(citCitshipCounID) as anzahl FROM citizens WHERE citResidenceCounID in (12) GROUP BY citCitshipCounID ORDER BY anzahl DESC"""
 
-    #dbInterface.executeQuery(query)
-    #dbInterface.printCurQueryResult()
-    #dbInterface.writeCurQueryResult2CSV()
+            #dbInterface.executeQuery(query)
+            #dbInterface.printCurQueryResult()
+            #dbInterface.writeCurQueryResult2CSV()
+    except Exception, e:
+        print "An error encountered: \n\t", e
 
     endtime = time.time()
     print "The script runned %f seconds" %(endtime-starttime)
