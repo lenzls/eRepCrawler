@@ -42,12 +42,12 @@ if __name__ == '__main__':
         else:
             if options.type == "standard":
                 crawler = ERepCrawler()
-                #standardCrawlTask(crawler)
+                standardCrawlTask(crawler)
                 crawler.printStats()
                 print "executing standard task"
             elif options.type == "extended":
                 crawler = ERepCrawler()
-                #extendedCrawlTask(crawler)
+                extendedCrawlTask(crawler)
                 #germanyAslovenia(crawler)
                 #crawler.addCitizensOfRegion(255)
                 print "executing extended task"
