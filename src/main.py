@@ -32,6 +32,7 @@ def germanyAslovenia(crawler):
 if __name__ == '__main__':
     optparser = optparse.OptionParser()
     optparser.add_option("-t", "--type", dest="type", help="clarify what sort of crawling should be done\t[standard,extended,query]")
+    optparser.add_option("-q", "--query", dest="query", help="sql query as string")
     (options, args) = optparser.parse_args()
     starttime = time.time()
     try:
@@ -54,12 +55,15 @@ if __name__ == '__main__':
             elif options.type == "query":
                 dbInterface = ERepDBInterface()
                 print "executing query task"
+                query = ""
+                if None != options.query:
+                    query = options.query
                 #query = """SELECT citLevel, COUNT(citLevel) AS anzahl FROM citizens WHERE citCitshipCounID == 12 GROUP BY citLevel"""
-                #query = """SELECT citCitshipCounName, COUNT(citCitshipCounID) as anzahl FROM citizens WHERE citResidenceCounID in (12) GROUP BY citCitshipCounID ORDER BY anzahl DESC"""
-
-                #dbInterface.executeQuery(query)
-                #dbInterface.printCurQueryResult()
-                #dbInterface.writeCurQueryResult2CSV()
+                #query = """SELECT citWorkSkillPoints/20000*20000 as minValue, (citWorkSkillPoints/20000+1)*20000-1 as maxValue, COUNT(*) FROM citizens WHERE citCitshipCounID = 61 AND updateTimeDay == '2011-03-28' GROUP BY citWorkSkillPoints/20000"""
+                
+                dbInterface.executeQuery(query)
+                dbInterface.printCurQueryResult()
+                dbInterface.writeCurQueryResult2CSV()
     except Exception, e:
         print "An error encountered: \n\t", e
 
