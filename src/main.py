@@ -1,5 +1,4 @@
 #!/usr/bin/python
-#!/opt/bin/python
 '''
 Created on 23.03.2011
 
