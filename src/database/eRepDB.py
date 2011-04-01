@@ -141,7 +141,7 @@ class eRepLokalDBManager():
         self.connection.commit()
         
         try:
-            #print "\tadded: %s (%i)" %(values["name"], values["id"])    #commented because of too much output
+            #print "\t\t\tadded: %s (%i)" %(values["name"], values["id"])    #commented because of too much output
             pass
         except UnicodeEncodeError:
             print "\tadded kyrillic name"
@@ -173,7 +173,7 @@ class eRepLokalDBManager():
         self.connection.commit()
 
         try:
-            print "\tadded: %s (%i)" %(values["name"], values["id"])
+            print "\t\tadded: %s (%i)" %(values["name"], values["id"])
         except UnicodeEncodeError:
             print "\tadded kyrillic name"
     

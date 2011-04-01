@@ -41,20 +41,20 @@ if __name__ == '__main__':
             sys.exit()
         else:
             if options.type == "standard":
+                print "executing standard task"
                 crawler = ERepCrawler()
                 standardCrawlTask(crawler)
                 crawler.printStats()
-                print "executing standard task"
             elif options.type == "extended":
+                print "executing extended task"
                 crawler = ERepCrawler()
                 extendedCrawlTask(crawler)
                 #germanyAslovenia(crawler)
                 #crawler.addCitizensOfRegion(255)
-                print "executing extended task"
                 crawler.printStats()
             elif options.type == "query":
-                dbInterface = ERepDBInterface()
                 print "executing query task"
+                dbInterface = ERepDBInterface()
                 query = ""
                 if None != options.query:
                     query = options.query

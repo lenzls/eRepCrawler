@@ -32,21 +32,21 @@ class ERepCrawler(object):
     def addCitizensOfRegion(self, regionID):
         region = eRepublikApi.Region(regionID)
         region.load()
-        print "processing %i persons of region %i" %(len(region.citizen_ids), regionID)
+        print "\t\tprocessing %i persons of region %i" %(len(region.citizen_ids), regionID)
         i = 0
         for citID in region.citizen_ids:
             i += 1
             #print "\tperson nr %i / %i in region %i" %(i, len(region.citizen_ids), regionID)    #commented because of too much output
             self.addCitizen(citID)
-        print "\tprocessed %i persons in region %i" %(len(region.citizen_ids), regionID)
+        print "\t\tprocessed %i persons in region %i" %(len(region.citizen_ids), regionID)
         self.addedRegionsCitsC += 1
         
     def addCitizensOfCountry(self, countryID):
         country = eRepublikApi.Country(countryID)
         country.load()
-        print "processing %i regions of country nr %i" %(len(country.regionDict),countryID)
+        print "\tprocessing %i regions of country nr %i" %(len(country.regionDict),countryID)
         for regionID in country.regionDict:
-            print "processing region  %s (%i)" %(country.regionDict[regionID], regionID)
+            print "\tprocessing region  %s (%i)" %(country.regionDict[regionID], regionID)
             self.addCitizensOfRegion(regionID)
         self.addedCountriesCitsC += 1
     
@@ -57,15 +57,15 @@ class ERepCrawler(object):
     def addGeneralDataOfWorld(self):
         countries = eRepublikApi.World()
         countries.load()
-        print "processing %i countries" %len(countries.countryDict)
+        print "\tprocessing %i countries" %len(countries.countryDict)
         for countryID in countries.countryDict:
-            print "processing country %s (%i)" %(countries.countryDict[countryID], countryID)
+            print "\tprocessing country %s (%i)" %(countries.countryDict[countryID], countryID)
             self.addGeneralDataOfCountry(countryID)
     
     def addCitizensOfBundesgebiet(self):
-        print "#########################"
-        print "processing good ol' germany"
-        print "-------------------------"
+        print "\t#########################"
+        print "\tprocessing good ol' germany"
+        print "\t-------------------------"
         bundesgebietRegions = {
                     243:"Baden-Wurttemberg",
                     244:"Bavaria",
@@ -81,9 +81,9 @@ class ERepCrawler(object):
                     257:"Schleswig-Holstein and Hamburg",
                     258:"Thuringia"
                     }
-        print "processing %i regions of good ol' germany" %(len(bundesgebietRegions))
+        print "\tprocessing %i regions of good ol' germany" %(len(bundesgebietRegions))
         for regionID in bundesgebietRegions:
-            print "processing region %s (%i)" %(bundesgebietRegions[regionID], regionID)
+            print "\tprocessing region %s (%i)" %(bundesgebietRegions[regionID], regionID)
             self.addCitizensOfRegion(regionID)
         self.addedCountriesCitsC += 1
     
