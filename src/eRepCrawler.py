@@ -44,7 +44,7 @@ class ERepCrawler(object):
     def addCitizensOfCountry(self, countryID):
         country = eRepublikApi.Country(countryID)
         country.load()
-        print "\tprocessing %i regions of country nr %i" %(len(country.regionDict),countryID)
+        print "processing %i regions of country nr %i" %(len(country.regionDict),countryID)
         for regionID in country.regionDict:
             print "\tprocessing region  %s (%i)" %(country.regionDict[regionID], regionID)
             self.addCitizensOfRegion(regionID)
@@ -57,15 +57,15 @@ class ERepCrawler(object):
     def addGeneralDataOfWorld(self):
         countries = eRepublikApi.World()
         countries.load()
-        print "\tprocessing %i countries" %len(countries.countryDict)
+        print "processing %i countries" %len(countries.countryDict)
         for countryID in countries.countryDict:
             print "\tprocessing country %s (%i)" %(countries.countryDict[countryID], countryID)
             self.addGeneralDataOfCountry(countryID)
     
     def addCitizensOfBundesgebiet(self):
-        print "\t#########################"
-        print "\tprocessing good ol' germany"
-        print "\t-------------------------"
+        print "#########################"
+        print "processing good ol' germany"
+        print "-------------------------"
         bundesgebietRegions = {
                     243:"Baden-Wurttemberg",
                     244:"Bavaria",
@@ -81,7 +81,7 @@ class ERepCrawler(object):
                     257:"Schleswig-Holstein and Hamburg",
                     258:"Thuringia"
                     }
-        print "\tprocessing %i regions of good ol' germany" %(len(bundesgebietRegions))
+        print "processing %i regions of good ol' germany" %(len(bundesgebietRegions))
         for regionID in bundesgebietRegions:
             print "\tprocessing region %s (%i)" %(bundesgebietRegions[regionID], regionID)
             self.addCitizensOfRegion(regionID)
