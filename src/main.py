@@ -50,7 +50,7 @@ if __name__ == '__main__':
                 crawler = ERepCrawler()
                 extendedCrawlTask(crawler)
                 #germanyAslovenia(crawler)
-                #crawler.addCitizensOfRegion(255)
+                ##crawler.addCitizensOfRegion(255)
                 crawler.printStats()
             elif options.type == "query":
                 print "executing query task"
