@@ -45,6 +45,7 @@ if __name__ == '__main__':
                 print "executing standard task"
                 crawler = ERepCrawler()
                 #standardCrawlTask(crawler)
+                crawler.addCitizen(3051253)
                 crawler.printStats()
             elif options.type == "extended":
                 print "executing extended task"
