@@ -35,6 +35,7 @@ if __name__ == '__main__':
     optparser.add_option("-q", "--query", dest="query", help="sql query as string")
     (options, args) = optparser.parse_args()
     starttime = time.time()
+    print "Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.gmtime())
     try:
         if options.type not in ["standard", "extended", "query"]:
             print "Wrong TYPE value"
@@ -43,7 +44,7 @@ if __name__ == '__main__':
             if options.type == "standard":
                 print "executing standard task"
                 crawler = ERepCrawler()
-                standardCrawlTask(crawler)
+                #standardCrawlTask(crawler)
                 crawler.printStats()
             elif options.type == "extended":
                 print "executing extended task"
@@ -69,3 +70,4 @@ if __name__ == '__main__':
 
     endtime = time.time()
     print "The script runned %f seconds" %(endtime-starttime)
+    print "Script ended at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.gmtime())
