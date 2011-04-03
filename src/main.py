@@ -9,6 +9,7 @@ from eRepCrawler import ERepCrawler
 from eRepDBInterface import ERepDBInterface
 import time, sys
 import optparse
+import os
 
 def standardCrawlTask(crawler):
     crawler.addCitizensOfBundesgebiet()
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     optparser.add_option("-q", "--query", dest="query", help="sql query as string")
     (options, args) = optparser.parse_args()
     starttime = time.time()
-    print "Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.gmtime())
+    print "Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime())
     try:
         if options.type not in ["standard", "extended", "query"]:
             print "Wrong TYPE value"
@@ -71,4 +72,4 @@ if __name__ == '__main__':
 
     endtime = time.time()
     print "The script runned %f seconds" %(endtime-starttime)
-    print "Script ended at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.gmtime())
+    print "Script ended at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime())
