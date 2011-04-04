@@ -142,7 +142,7 @@ class eRepLokalDBManager():
         self.connection.commit()
         
         try:
-            Logger.log("\t\t\tadded: %s (%i)" %(values["name"], values["id"]))    #commented because of too much output
+            #Logger.log("\t\t\tadded: %s (%i)" %(values["name"], values["id"]))    #commented because of too much output
             pass
         except UnicodeEncodeError:
             Logger.log("\tadded kyrillic name")

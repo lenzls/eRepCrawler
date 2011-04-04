@@ -38,6 +38,7 @@ if __name__ == '__main__':
     (options, args) = optparser.parse_args()
     starttime = time.time()
     
+    Logger.log("|eRepublik Crawler|")
     Logger.log("---Started logging---")
     Logger.log("Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime()))
     try:
@@ -47,8 +48,7 @@ if __name__ == '__main__':
             if options.type == "standard":
                 Logger.log("executing standard task")
                 crawler = ERepCrawler()
-                #standardCrawlTask(crawler)
-                crawler.addCitizensOfCountry(12)
+                standardCrawlTask(crawler)
                 crawler.printStats()
             elif options.type == "extended":
                 Logger.log("executing extended task")
