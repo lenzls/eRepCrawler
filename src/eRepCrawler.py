@@ -6,6 +6,7 @@ Created on 24.03.2011
 
 from database.eRepDB import eRepLokalDBManager
 import domarIRCbot.eRepublik as eRepublikApi
+from logger import Logger
 
 class ERepCrawler(object):
     '''
@@ -32,21 +33,21 @@ class ERepCrawler(object):
     def addCitizensOfRegion(self, regionID):
         region = eRepublikApi.Region(regionID)
         region.load()
-        print "\t\tprocessing %i persons of region %i" %(len(region.citizen_ids), regionID)
+        Logger.log("\t\tprocessing %i persons of region %i" %(len(region.citizen_ids), regionID))
         i = 0
         for citID in region.citizen_ids:
             i += 1
-            #print "\tperson nr %i / %i in region %i" %(i, len(region.citizen_ids), regionID)    #commented because of too much output
+            #Logger.log("\tperson nr %i / %i in region %i" %(i, len(region.citizen_ids), regionID))    #commented because of too much output
             self.addCitizen(citID)
-        print "\t\tprocessed %i persons in region %i" %(len(region.citizen_ids), regionID)
+        Logger.log("\t\tprocessed %i persons in region %i" %(len(region.citizen_ids), regionID))
         self.addedRegionsCitsC += 1
         
     def addCitizensOfCountry(self, countryID):
         country = eRepublikApi.Country(countryID)
         country.load()
-        print "processing %i regions of country nr %i" %(len(country.regionDict),countryID)
+        Logger.log("processing %i regions of country nr %i" %(len(country.regionDict),countryID))
         for regionID in country.regionDict:
-            print "\tprocessing region  %s (%i)" %(country.regionDict[regionID], regionID)
+            Logger.log("\tprocessing region  %s (%i)" %(country.regionDict[regionID], regionID))
             self.addCitizensOfRegion(regionID)
         self.addedCountriesCitsC += 1
     
@@ -57,15 +58,15 @@ class ERepCrawler(object):
     def addGeneralDataOfWorld(self):
         countries = eRepublikApi.World()
         countries.load()
-        print "processing %i countries" %len(countries.countryDict)
+        Logger.log("processing %i countries" %len(countries.countryDict))
         for countryID in countries.countryDict:
-            print "\tprocessing country %s (%i)" %(countries.countryDict[countryID], countryID)
+            Logger.log("\tprocessing country %s (%i)" %(countries.countryDict[countryID], countryID))
             self.addGeneralDataOfCountry(countryID)
     
     def addCitizensOfBundesgebiet(self):
-        print "#########################"
-        print "processing good ol' germany"
-        print "-------------------------"
+        Logger.log("#########################")
+        Logger.log("processing good ol' germany")
+        Logger.log("-------------------------")
         bundesgebietRegions = {
                     243:"Baden-Wurttemberg",
                     244:"Bavaria",
@@ -81,14 +82,14 @@ class ERepCrawler(object):
                     257:"Schleswig-Holstein and Hamburg",
                     258:"Thuringia"
                     }
-        print "processing %i regions of good ol' germany" %(len(bundesgebietRegions))
+        Logger.log("processing %i regions of good ol' germany" %(len(bundesgebietRegions)))
         for regionID in bundesgebietRegions:
-            print "\tprocessing region %s (%i)" %(bundesgebietRegions[regionID], regionID)
+            Logger.log("\tprocessing region %s (%i)" %(bundesgebietRegions[regionID], regionID))
             self.addCitizensOfRegion(regionID)
         self.addedCountriesCitsC += 1
     
     def printStats(self):
-        print "+++++++++++++++++++++++++++++++++++"
-        print "successfully processed citizens of:\n - %i countries \n - %i regions \n - %i citizens \n and country data of %i countries" %(self.addedCountriesCitsC,self.addedRegionsCitsC,self.addedPersonsC, self.addedGeneralDataCountriesC)
-        print "+++++++++++++++++++++++++++++++++++"
+        Logger.log("+++++++++++++++++++++++++++++++++++")
+        Logger.log("successfully processed citizens of:\n - %i countries \n - %i regions \n - %i citizens \n and country data of %i countries" %(self.addedCountriesCitsC,self.addedRegionsCitsC,self.addedPersonsC, self.addedGeneralDataCountriesC))
+        Logger.log("+++++++++++++++++++++++++++++++++++")
         

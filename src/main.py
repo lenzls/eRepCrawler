@@ -7,9 +7,9 @@ Created on 23.03.2011
 
 from eRepCrawler import ERepCrawler
 from eRepDBInterface import ERepDBInterface
+from logger import Logger
 import time, sys
 import optparse
-import os
 
 def standardCrawlTask(crawler):
     crawler.addCitizensOfBundesgebiet()
@@ -31,32 +31,34 @@ def germanyAslovenia(crawler):
     
 
 if __name__ == '__main__':
+    Logger.initLogger()
     optparser = optparse.OptionParser()
     optparser.add_option("-t", "--type", dest="type", help="clarify what sort of crawling should be done\t[standard,extended,query]")
     optparser.add_option("-q", "--query", dest="query", help="sql query as string")
     (options, args) = optparser.parse_args()
     starttime = time.time()
-    print "Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime())
+    
+    Logger.log("---Started logging---")
+    Logger.log("Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime()))
     try:
         if options.type not in ["standard", "extended", "query"]:
-            print "Wrong TYPE value"
-            sys.exit()
+            Logger.log("Error: Wrong TYPE value")
         else:
             if options.type == "standard":
-                print "executing standard task"
+                Logger.log("executing standard task")
                 crawler = ERepCrawler()
                 #standardCrawlTask(crawler)
                 crawler.addCitizensOfCountry(12)
                 crawler.printStats()
             elif options.type == "extended":
-                print "executing extended task"
+                Logger.log("executing extended task")
                 crawler = ERepCrawler()
-                extendedCrawlTask(crawler)
+                #extendedCrawlTask(crawler)
                 #germanyAslovenia(crawler)
-                ##crawler.addCitizensOfRegion(255)
+                crawler.addCitizensOfRegion(258)
                 crawler.printStats()
             elif options.type == "query":
-                print "executing query task"
+                Logger.log("executing query task")
                 dbInterface = ERepDBInterface()
                 query = ""
                 if None != options.query:
@@ -68,8 +70,12 @@ if __name__ == '__main__':
                 dbInterface.printCurQueryResult()
                 dbInterface.writeCurQueryResult2CSV()
     except Exception, e:
-        print "An error encountered: \n\t", e
+        Logger.log("An error encountered:%s \n\t" %e)
 
     endtime = time.time()
-    print "The script runned %f seconds" %(endtime-starttime)
-    print "Script ended at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime())
+    Logger.log("The script runned %f seconds" %(endtime-starttime))
+    Logger.log("Script ended at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime()))
+    
+    Logger.log("---Stopped logging---")
+
+    print "script finished"

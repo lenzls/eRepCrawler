@@ -20,6 +20,7 @@
 from math import ceil, floor
 
 from datetime import tzinfo, timedelta, datetime
+from logger import Logger
 
 try:
     from xml.etree.cElementTree import *
@@ -85,7 +86,7 @@ class eRepublikXMLProcessor(object):
                 xml = ''.join(urlopen(path))
                 break
             except:
-                print "API not available, trying again.."
+                Logger.log("API not available, trying again..")
         return xml
             
 
@@ -560,7 +561,7 @@ class BattleFeed(eRepublikXMLProcessor):
         if self.loaded or self.processed:
             return
         while self._loadNextPage():
-            print 'Loaded page ' + str(self.curPage)
+            Logger.log('Loaded page ' + str(self.curPage))
         self.loaded = True
 
     def process(self):

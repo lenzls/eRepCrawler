@@ -7,6 +7,7 @@ Created on 23.03.2011
 import sqlite3
 import os
 import domarIRCbot.eRepublik as eRepTools
+from logger import Logger
 
 
 class eRepLokalDBManager():
@@ -22,7 +23,7 @@ class eRepLokalDBManager():
             if the database is already existing -> automatically skiped
         """
 
-        print "try: creating citizens TABLE"
+        Logger.log("try: creating citizens TABLE")
         try:
             self.cursor.execute("""CREATE TABLE citizens( 
                 updateTime TEXT,
@@ -65,9 +66,9 @@ class eRepLokalDBManager():
                 citAvatarLink TEXT
                 )""")
             
-            print "created citizens TABLE"
+            Logger.log("created citizens TABLE")
         except sqlite3.OperationalError,  e:
-            print "Error: ", e
+            Logger.log("Error: %s" %e)
 
         print "try: creating countries TABLE"
         try:
@@ -86,9 +87,9 @@ class eRepLokalDBManager():
                 countryRegions TEXT
                 )""")
             
-            print "created countries TABLE"
+            Logger.log("created countries TABLE")
         except sqlite3.OperationalError,  e:
-            print "Error: ", e
+            Logger.log("Error: %s" %e)
 
     def addCitizen(self, id):
         """adds a row to the citizens table of the database"""
@@ -141,10 +142,10 @@ class eRepLokalDBManager():
         self.connection.commit()
         
         try:
-            #print "\t\t\tadded: %s (%i)" %(values["name"], values["id"])    #commented because of too much output
+            Logger.log("\t\t\tadded: %s (%i)" %(values["name"], values["id"]))    #commented because of too much output
             pass
         except UnicodeEncodeError:
-            print "\tadded kyrillic name"
+            Logger.log("\tadded kyrillic name")
     
     def addGeneralDataOfCountry(self, id):
         """adds a row to the countries table of the database"""
@@ -173,9 +174,9 @@ class eRepLokalDBManager():
         self.connection.commit()
 
         try:
-            print "\t\tadded: %s (%i)" %(values["name"], values["id"])
+            Logger.log("\t\tadded: %s (%i)" %(values["name"], values["id"]))
         except UnicodeEncodeError:
-            print "\tadded kyrillic name"
+            Logger.log("\tadded kyrillic name")
     
     def selectorQuery(self, query):
         """expects a sql selector query and returns the result of it"""
