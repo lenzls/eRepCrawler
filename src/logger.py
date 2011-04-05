@@ -30,9 +30,17 @@ class Logger(object):
             print "\t%s" %e
 
     @classmethod
-    def log(Logger,line):
+    def log(Logger, line):
         if Logger.initialized:
             sys.stdout.write("%s: %s\n" %(time.strftime("%Y-%m-%d--%H-%M-%S", time.localtime()),str(line)))
+            Logger.logfile.write("%s: %s\n" %(time.strftime("%Y-%m-%d--%H-%M-%S", time.localtime()),str(line)))
+        else:
+            print "logger not initalized!"
+            sys.exit()
+    
+    @classmethod
+    def log2File(Logger, line):
+        if Logger.initialized:
             Logger.logfile.write("%s: %s\n" %(time.strftime("%Y-%m-%d--%H-%M-%S", time.localtime()),str(line)))
         else:
             print "logger not initalized!"

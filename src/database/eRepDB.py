@@ -142,8 +142,7 @@ class eRepLokalDBManager():
         self.connection.commit()
         
         try:
-            #Logger.log("\t\t\tadded: %s (%i)" %(values["name"], values["id"]))    #commented because of too much output
-            pass
+            Logger.log2File("\t\t\tadded: %s (%i)" %(values["name"], values["id"]))    #commented because of too much output
         except UnicodeEncodeError:
             Logger.log("\tadded kyrillic name")
     
@@ -176,7 +175,7 @@ class eRepLokalDBManager():
         try:
             Logger.log("\t\tadded: %s (%i)" %(values["name"], values["id"]))
         except UnicodeEncodeError:
-            Logger.log("\tadded kyrillic name")
+            Logger.log("\t\tadded kyrillic name")
     
     def selectorQuery(self, query):
         """expects a sql selector query and returns the result of it"""
