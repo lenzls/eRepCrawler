@@ -86,7 +86,7 @@ class eRepublikXMLProcessor(object):
                 xml = ''.join(urlopen(path))
                 break
             except:
-                Logger.log("API not available, trying again..")
+                Logger.log2File("API not available, trying again..")
         return xml
             
 
