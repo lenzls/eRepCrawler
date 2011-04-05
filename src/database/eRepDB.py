@@ -144,7 +144,7 @@ class eRepLokalDBManager():
         try:
             Logger.log2File("\t\t\tadded: %s (%i)" %(values["name"], values["id"]))    #commented because of too much output
         except UnicodeEncodeError:
-            Logger.log("\tadded kyrillic name")
+            Logger.log2File("\tadded kyrillic name")
     
     def addGeneralDataOfCountry(self, id):
         """adds a row to the countries table of the database"""
