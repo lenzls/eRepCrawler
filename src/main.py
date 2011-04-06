@@ -73,7 +73,7 @@ if __name__ == '__main__':
         Logger.log("An error encountered:%s \n\t" %e)
 
     endtime = time.time()
-    Logger.log("The script runned %f seconds" %(endtime-starttime))
+    Logger.log("The script runned %f seconds = %f minutes = %f hours" %(endtime-starttime, (endtime-starttime)/60, (endtime-starttime)/60/24))
     Logger.log("Script ended at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime()))
     
     Logger.log("---Stopped logging---")
