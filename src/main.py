@@ -45,7 +45,7 @@ if __name__ == '__main__':
     Logger.log("---Started logging---")
     Logger.log("Script started at: %s" %time.strftime("%Y-%m-%d [%H-%M-%S]", time.localtime()))
     try:
-        if options.type not in ["standard", "extended", "query"]:
+        if options.type not in ["standard", "extended", "query", "eromania"]:
             Logger.log("Error: Wrong TYPE value")
         else:
             if options.type == "standard":
