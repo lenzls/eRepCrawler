@@ -28,6 +28,9 @@ def germanyAslovenia(crawler):
     crawler.addCitizensOfBundesgebiet()
     crawler.addCitizensOfCountry(61)
     crawler.addGeneralDataOfWorld()
+
+def olRomania(crawler):
+    crawler.addCitizensOfOriginalRomania()
     
 
 if __name__ == '__main__':
@@ -56,6 +59,11 @@ if __name__ == '__main__':
                 #extendedCrawlTask(crawler)
                 #germanyAslovenia(crawler)
                 crawler.addCitizensOfRegion(258)
+                crawler.printStats()
+            elif options.type == "eromania":
+                Logger.log("executing romania task")
+                crawler = ERepCrawler()
+                olRomania(crawler)
                 crawler.printStats()
             elif options.type == "query":
                 Logger.log("executing query task")

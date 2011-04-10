@@ -88,6 +88,27 @@ class ERepCrawler(object):
             self.addCitizensOfRegion(regionID)
         self.addedCountriesCitsC += 1
     
+    def addCitizensOfOriginalRomania(self):
+        Logger.log("#########################")
+        Logger.log("processing good ol' romania")
+        Logger.log("-------------------------")
+        romanianRegions = {
+                    38:"Maramures",
+                    11:"Banat",
+                    3:"Dobrogea",
+                    5:"Muntenia",
+                    9:"Oltenia",
+                    35:"Transilvania",
+                    36:"Crisana",
+                    37:"Moldova",
+                    39:"Bucovina"
+                    }
+        Logger.log("processing %i regions of good ol' romania" %(len(romanianRegions)))
+        for regionID in romanianRegions:
+            Logger.log("\tprocessing region %s (%i)" %(romanianRegions[regionID], regionID))
+            self.addCitizensOfRegion(regionID)
+        self.addedCountriesCitsC += 1
+
     def printStats(self):
         Logger.log("+++++++++++++++++++++++++++++++++++")
         Logger.log("successfully processed citizens of:\n - %i countries \n - %i regions \n - %i citizens \n and country data of %i countries" %(self.addedCountriesCitsC,self.addedRegionsCitsC,self.addedPersonsC, self.addedGeneralDataCountriesC))
